@@ -1,0 +1,69 @@
+{% extends "profile.twig" %}
+{% block userCoins %}
+    {% if userCoins.0 %}
+        <div class="item2-2">
+            <p class="h2">Your cryptocurrency:</p>
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th style="border: 2px solid white;" rowspan="2">Cryptocurrency symbol</th>
+                    <th style="border: 2px solid white;" rowspan="2">Amount</th>
+                    <th style="border: 2px solid white;" colspan="3">Per cryptocurrency</th>
+                    <th style="border: 2px solid white;" rowspan="2">Value EUR</th>
+                </tr>
+                <tr>
+                    <th style="border: 2px solid white;">Purchase price EUR</th>
+                    <th style="border: 2px solid white;">Price now EUR</th>
+                    <th style="border: 2px solid white;">Profit/Loss EUR</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for userCoin in userCoins %}
+                    <tr>
+                        <th><a class="black" href="/coin/{{ userCoin.symbol }}">{{ userCoin.symbol }}</a></th>
+                        <th>{{ userCoin.amount }}</th>
+                        <th>{{ userCoin.price|round(2) }}</th>
+                        <th>{{ userCoin.priceNow|round(2) }}</th>
+                        <th style="color: {{  userCoin.profit|round(2)>0 ? 'green' : 'red' }}">{{ userCoin.profit|round(2)}}</th>
+                        <th style="color: {{  userCoin.profit|round(2)>0 ? 'green' : 'red' }}">{{ userCoin.value|round(2)}}</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    {% else %}
+        <p class="h2">You do not have any cryptocurrencies!</p>
+    {% endif %}
+    {% if userShorts.0 %}
+            <p class="h2">Your opened shorts:</p>
+            <table class="fl-table">
+                <thead>
+                <tr>
+                    <th style="border: 2px solid white;" rowspan="2">Cryptocurrency symbol</th>
+                    <th style="border: 2px solid white;" rowspan="2">Amount</th>
+                    <th style="border: 2px solid white;" colspan="3">Per cryptocurrency</th>
+                    <th style="border: 2px solid white;" rowspan="2">Value EUR</th>
+                </tr>
+                <tr>
+                    <th style="border: 2px solid white;">Purchase price EUR</th>
+                    <th style="border: 2px solid white;">Price now EUR</th>
+                    <th style="border: 2px solid white;">Profit/Loss EUR</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for userShort in userShorts %}
+                    <tr>
+                        <th><a class="black" href="/coin/{{ userShort.symbol }}">{{ userShort.symbol }}</a></th>
+                        <th>{{ userShort.amount }}</th>
+                        <th>{{ userShort.price|round(2) }}</th>
+                        <th>{{ userShort.priceNow|round(2) }}</th>
+                        <th style="color: {{  userShort.profit|round(2)>0 ? 'green' : 'red' }}">{{ userShort.profit|round(2)}}</th>
+                        <th style="color: {{  userShort.profit|round(2)>0 ? 'green' : 'red' }}">{{ userShort.value|round(2)}}</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="h2">You do not have opened shorts!</p>
+    {% endif %}
+{% endblock %}

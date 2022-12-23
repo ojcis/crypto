@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/Styles/profileStyle.css">
+</head>
+<body>
+<div class="background">
+    <div class="loginBox">
+        <a href="/" class="login">Home</a> |
+        <a href="/logout" class="login">Logout</a>
+    </div>
+    <div class="box">
+        <div class="welcome">
+            <h2 class="h2">{{ user.name }} profile.</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="item1">
+                <button onclick="location.href='/profile/{{ user.id }}'" type="button">Your coins</button><br>
+            <form action="/profile">
+                <button name="show" value="profileInfo">Profile info</button><br>
+                <button name="show" value="addMoney">Add money</button><br>
+                <button name="show" value="withdrawMoney">Withdraw money</button><br>
+                <button name="show" value="changeName">Change name</button><br>
+                <button name="show" value="changeEmail">Change email</button><br>
+                <button name="show" value="changePassword">Change password</button><br>
+                <button name="show" value="deleteAccount">Delete account</button><br>
+            </form>
+        </div>
+        <div class="item2">
+                {% if profileInfo %}
+                <div class="item2-1">
+                    <p class="p1">
+                        ID: {{ user.id }}<br>
+                        name: {{ user.name }}<br>
+                        email: {{ user.email }}<br>
+                        money: {{ user.money|round(2) }} EUR<br>
+                    </p>
+                </div>
+                {% endif %}
+                {% block userCoins %}
+                {% endblock %}
+                {% if addMoney %}
+                <div class="item2-1">
+                    <p class="h2">Add money:</p>
+                    <form action="/profile=addMoney" method="post">
+                        <p class="error">{{ error.password }}</p>
+                        <input class="i" type="number" step="0.01" min="0.01" name="addMoney" placeholder="ievieto cik tev gribās XD" required><br>
+                        <input class="i" type="password" name="password" placeholder="password" required><br>
+                        <input class="b" type="submit" value="Add Money">
+                    </form>
+                </div>
+                {% endif %}
+                {% if withdrawMoney %}
+                <div class="item2-1">
+                    <p class="h2">Withdraw money:</p>
+                    <p class="h2" style="font-size: 25px">(Your balance: {{ user.money|round(2) }} EUR)</p>
+                    <form action="/profile=withdrawMoney" method="post">
+                        <p class="error">{{ error.password }}</p>
+                        <input class="i" type="number" step="0.01" min="0.01" max="{{ user.money }}" name="withdrawMoney" placeholder="withdraw amount" required><br>
+                        <input class="i" type="password" name="password" placeholder="password" required><br>
+                        <input class="b" type="submit" value="Withdraw money">
+                    </form>
+                </div>
+                {% endif %}
+                {% if changeName %}
+                <div class="item2-1">
+                    <p class="h2">Change name:</p>
+                    <form action="/profile=changeName" method="post">
+                        <p class="error">{{ error.password }}</p>
+                        <input class="i" type="text" name="name" value="{{ user.newName }}" placeholder="new name" required><br>
+                        <input class="i" type="password" name="password" placeholder="password" required><br>
+                        <input class="b" type="submit" value="Change name">
+                    </form>
+                </div>
+                {% endif %}
+                {% if changeEmail %}
+                <div class="item2-1">
+                    <p class="h2">Change email:</p>
+                    <form action="/profile=changeEmail" method="post">
+                        <p class="error">{{ error.email }}{{ error.password }}</p>
+                        <input class="i" type="email" name="email" value="{{ user.newEmail }}" placeholder="new email" required><br>
+                        <input class="i" type="password" name="password" placeholder="password" required><br>
+                        <input class="b" type="submit" value="Change email">
+                    </form>
+                </div>
+                {% endif %}
+                {% if changePassword %}
+                <div class="item2-1">
+                    <p class="h2">Change password:</p>
+                    <form action="/profile=changePassword" method="post">
+                        <p class="error">{{ error.password }}</p>
+                        <input class="i" type="password" name="password" placeholder="current password" required><br>
+                        <input class="i" type="password" name="newPassword" placeholder="new password" required><br>
+                        <input class="i" type="password" name="confirmNewPassword" placeholder="confirm new password" required><br>
+                        <input class="b" type="submit" value="Change password">
+                    </form>
+                </div>
+                {% endif %}
+                {% if deleteAccount %}
+                <div class="item2-1">
+                    <p class="h2">Delete account:</p>
+                    <form action="/profile=deleteAccount" method="post">
+                        <p class="error">{{ error.password }}</p>
+                        <input class="i" type="password" name="password" placeholder="password" required><br>
+                        <input class="b" type="submit" value="Delete account">
+                    </form>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "index.twig" %}
+{% block cryptocurrencies %}
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <tr style="border: 2px solid white;">
+                <th colspan="8" style="font-size: 30px">10 most popular cryptocurrencies</th>
+            </tr>
+            <tr>
+                <th style="border: 2px solid white;">Logo</th>
+                <th style="border: 2px solid white;">Symbol / Name</th>
+                <th style="border: 2px solid white;">Circulating supply</th>
+                <th style="border: 2px solid white;">Price</th>
+                <th style="border: 2px solid white;">1h %</th>
+                <th style="border: 2px solid white;">24h %</th>
+                <th style="border: 2px solid white;">7d %</th>
+                <th style="border: 2px solid white;">Volume (24h)</th>
+            </tr>
+            </thead>
+                <tbody>
+                {% for cryptocurrency in cryptocurrencies %}
+                <tr>
+                    <th><a href="/coin/{{ cryptocurrency.symbol }}"><img style="width: 50px" src="{{ cryptocurrency.logo }}"></a> </th>
+                    <th>{{ cryptocurrency.symbol }} / {{ cryptocurrency.name }}</th>
+                    <th>{{ cryptocurrency.circulatingSupply }}</th>
+                    <th>{{ cryptocurrency.price|round(2) }}</th>
+                    <th style="color: {{  cryptocurrency.percentChange1h|round(2)>0 ? 'green' : 'red' }}">{{ cryptocurrency.percentChange1h|round(2) }} %</th>
+                    <th style="color: {{  cryptocurrency.percentChange24h|round(2)>0 ? 'green' : 'red' }}">{{ cryptocurrency.percentChange24h|round(2) }} %</th>
+                    <th style="color: {{  cryptocurrency.percentChange7d|round(2)>0 ? 'green' : 'red' }}">{{ cryptocurrency.percentChange7d|round(2) }} %</th>
+                    <th>{{ cryptocurrency.volume24h|round(2) }}</th>
+                </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+    </div>
+{% endblock %}

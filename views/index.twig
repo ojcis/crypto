@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/Styles/indexStyle.css">
+</head>
+<body>
+<div class="background">
+<div class="loginBox">
+    <a href="/" class="login">Home</a> |
+    {% if user.id %}
+        <a href="/profile" class="login">Profile</a> |
+        <a href="/logout" class="login">Logout</a>
+    {% else %}
+        <a href="/register" class="login">Register</a> | <a href="/login" class="login">Login</a>
+    {% endif %}
+</div>
+<div class="box">
+    <div class="welcome">
+        <h2 class="h2">
+            Welcome, {% if user.id %}{{ user.name }}! Your balance: {{ user.money|round(2) }} EUR{% else %}please login.{% endif %}
+        </h2>
+    </div>
+    <div class="search">
+        <form action="/search" method="get">
+            <div class="searchBox">
+                <input class="searchInput" type="text" name="search" placeholder="Symbol">
+                <button class="searchButton" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% block cryptocurrencies %}{% endblock %}
+{% block cryptocurrency %}{% endblock %}
+</div>
+</body>
+</html>

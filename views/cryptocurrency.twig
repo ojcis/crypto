@@ -1,0 +1,141 @@
+{% extends "index.twig" %}
+{% block cryptocurrencies %}
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th style="border: 2px solid white;">Logo</th>
+                <th style="border: 2px solid white;">Symbol / Name</th>
+                <th style="border: 2px solid white;">Circulating supply</th>
+                <th style="border: 2px solid white;">Price</th>
+                <th style="border: 2px solid white;">1h %</th>
+                <th style="border: 2px solid white;">24h %</th>
+                <th style="border: 2px solid white;">7d %</th>
+                <th style="border: 2px solid white;">Volume (24h)</th>
+            </tr>
+            </thead>
+                <tbody>
+                <tr>
+                    <th><img style="width: 50px" src="{{ cryptocurrency.logo }}"></th>
+                    <th>{{ cryptocurrency.symbol }} / {{ cryptocurrency.name }}</th>
+                    <th>{{ cryptocurrency.circulatingSupply }}</th>
+                    <th>{{ cryptocurrency.price|round(2) }}</th>
+                    <th style="color: {{  cryptocurrency.percentChange1h|round(2)>0 ? 'green' : 'red' }}">{{ cryptocurrency.percentChange1h|round(2) }} %</th>
+                    <th style="color: {{  cryptocurrency.percentChange24h|round(2)>0 ? 'green' : 'red' }}">{{ cryptocurrency.percentChange24h|round(2) }} %</th>
+                    <th style="color: {{  cryptocurrency.percentChange7d|round(2)>0 ? 'green' : 'red' }}">{{ cryptocurrency.percentChange7d|round(2) }} %</th>
+                    <th>{{ cryptocurrency.volume24h|round(2) }}</th>
+                </tr>
+                {% if user.id %}
+                    <tr>
+                        <th colspan="6">
+                            {% if userCoins.0 %}
+                            <div class="table-wrapper">
+                                <table class="fl-table">
+                                    <thead>
+                                    <tr style="border: 1px solid white;">
+                                        <th style="font-size: 30px" colspan="5">{{ cryptocurrency.symbol}} in your possession</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="border: 2px solid white;">Amount</th>
+                                        <th style="border: 2px solid white;">Purchase price EUR</th>
+                                        <th style="border: 2px solid white;">Profit/Loss EUR</th>
+                                        <th style="border: 2px solid white;">Value EUR</th>
+                                        <th style="border: 2px solid white;">Sell</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for userCoin in userCoins  %}
+                                        <tr>
+                                            <th>{{ userCoin.amount }}</th>
+                                            <th>{{ userCoin.price|round(2) }}</th>
+                                            <th style="color: {{ (cryptocurrency.price-userCoin.price)|round(2)>0 ? 'green':'red' }}">{{ (cryptocurrency.price-userCoin.price)|round(2) }}</th>
+                                            <th style="color: {{ (cryptocurrency.price-userCoin.price)|round(2)>0 ? 'green':'red' }}">{{ (cryptocurrency.price*userCoin.amount)|round(2) }}</th>
+                                            <th>
+                                                <div class="search">
+                                                    <form action="/coin/{{ userCoin.id }}/sell" method="post">
+                                                        <div class="searchBox buysell">
+                                                            <input class="SI" type="number" min="1" step="1" max="{{ userCoin.amount }}" name="amount" placeholder="amount">
+                                                            <button class="searchButton searchButton2" type="submit">SELL</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                                <p style="font-size: 30px">You do not have any {{ cryptocurrency.symbol }} in possession!</p>
+                            {% endif %}
+                        </th>
+                        <th colspan="2">
+                            <div class="search marg">
+                                <form action="/coin/{{ cryptocurrency.symbol }}/buy" method="post">
+                                    <div class="searchBox buysell">
+                                        <input class="SI" type="number" min="1" step="1" name="amount" placeholder="amount">
+                                        <button class="searchButton searchButton2" type="submit">BUY</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">
+                            {% if userShorts.0 %}
+                                <div class="table-wrapper">
+                                    <table class="fl-table">
+                                        <thead>
+                                        <tr style="border: 1px solid white;">
+                                            <th style="font-size: 30px" colspan="5">Opened {{ cryptocurrency.symbol}} shorts</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 2px solid white;">Amount</th>
+                                            <th style="border: 2px solid white;">Purchase price EUR</th>
+                                            <th style="border: 2px solid white;">Profit/Loss EUR</th>
+                                            <th style="border: 2px solid white;">Value EUR</th>
+                                            <th style="border: 2px solid white;">Sell</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for userShort in userShorts  %}
+                                            <tr>
+                                                <th>{{ userShort.amount }}</th>
+                                                <th>{{ userShort.price|round(2) }}</th>
+                                                <th style="color: {{ (userShort.price-cryptocurrency.price)|round(2)>0 ? 'green':'red' }}">{{ (userShort.price-cryptocurrency.price)|round(2) }}</th>
+                                                <th style="color: {{ (userShort.price-cryptocurrency.price)|round(2)>0 ? 'green':'red' }}">{{ (cryptocurrency.price*userShort.amount)|round(2) }}</th>
+                                                <th>
+                                                    <div class="search">
+                                                        <form action="/coin/{{ userShort.id }}/closeShort" method="post">
+                                                            <div class="searchBox buysell">
+                                                                <input class="SI" type="number" min="1" step="1" max="{{ userShort.amount }}" name="amount" placeholder="amount">
+                                                                <button class="searchButton searchButton2" type="submit">Close Short</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p style="font-size: 30px">You do not have opened {{ cryptocurrency.symbol }} shorts!</p>
+                            {% endif %}
+                        </th>
+                        <th colspan="2">
+                            <div class="search marg">
+                                <form action="/coin/{{ cryptocurrency.symbol }}/openShort" method="post">
+                                    <div class="searchBox buysell">
+                                        <input class="SI" type="number" min="1" step="1" name="amount" placeholder="amount">
+                                        <button class="searchButton searchButton2" type="submit">Open Short</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </th>
+                    </tr>
+                {% endif %}
+                </tbody>
+        </table>
+    </div>
+{% endblock %}
