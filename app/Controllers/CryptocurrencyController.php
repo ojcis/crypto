@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Redirect;
 use App\Services\GetUserCryptocurrencyService;
 use App\Services\GetUserShortsService;
-use App\Services\ProfileServices\ShowUserCoinsService;
 use App\View;
 use App\Services\ShowCryptocurrenciesService;
 use App\Services\ShowCryptocurrencyService;

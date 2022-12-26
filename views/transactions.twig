@@ -1,0 +1,32 @@
+{% extends "profile.twig" %}
+{% block transactions %}
+    <div class="item2-2">
+        <p class="h2">Your transaction history:</p>
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+            <tr>
+                <th style="border: 2px solid white;">Nr.</th>
+                <th style="border: 2px solid white;">Transaction</th>
+                <th style="border: 2px solid white;">Coin Symbol</th>
+                <th style="border: 2px solid white;">Coun Amount</th>
+                <th style="border: 2px solid white;">Money amount</th>
+                <th style="border: 2px solid white;">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <th>{{ loop.index }}</th>
+                    <th>{{ transaction.transaction }}</th>
+                    <th>{% if transaction.coinSymbol %}{{ transaction.coinSymbol }}{% else %}-{% endif %}</th>
+                    <th>{% if transaction.coinAmount %}{{ transaction.coinAmount }}{% else %}-{% endif %}</th>
+                    <th style="color: {{ transaction.moneyAmount>0 ? 'green' : 'red' }}">{{ transaction.moneyAmount|round(2) }}</th>
+                    <th>{{ transaction.date }}</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock%}

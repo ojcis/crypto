@@ -3,10 +3,12 @@
 namespace App\Repositories\Users;
 
 use App\DataBase;
+use App\Models\Collections\TransactionsCollection;
 use App\Models\Collections\UserCoinCollection;
 use App\Models\Collections\UserShortCollection;
 use App\Models\Cryptocurrency;
 use App\Models\NewUser;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserCoin;
 use App\Models\UserShort;
@@ -284,5 +286,42 @@ class MySqlUsersRepository implements UsersRepository
                 ['id' => $shortId]
             );
         }
+    }
+
+    public function getTransactionHistory(int $userId): TransactionsCollection
+    {
+        $queryBuilder=DataBase::getConnection()->createQueryBuilder();
+        $transactions=$queryBuilder
+            ->select('*')
+            ->from('transactions')
+            ->where('user_id=?')
+            ->orderBy('date','DESC')
+            ->setParameter(0,$userId)
+            ->fetchAllAssociative();
+        $transactionsCollection=[];
+        foreach ($transactions as $transaction){
+            $transactionsCollection[]=new Transaction(
+                $userId,
+                $transaction['transaction'],
+                $transaction['money_amount'],
+                $transaction['coin_symbol'],
+                $transaction['coin_amount'],
+                $transaction['date']
+            );
+        }
+        return new TransactionsCollection($transactionsCollection);
+    }
+
+    public function addTransaction(Transaction $transaction): void
+    {
+        $dataBase=DataBase::getConnection();
+        $dataBase->insert('transactions',[
+            'user_id' => $transaction->getUserId(),
+            'transaction' => $transaction->getTransaction(),
+            'coin_symbol' => $transaction->getCoinSymbol(),
+            'coin_amount' => $transaction->getCoinAmount(),
+            'money_amount' => $transaction->getMoneyAmount(),
+            'date' => $transaction->getDate()
+        ]);
     }
 }

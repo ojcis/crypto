@@ -13,6 +13,7 @@ use App\Controllers\ProfileController;
 use App\Controllers\LogoutController;
 use App\Controllers\BuyController;
 use App\Controllers\SellController;
+use App\Controllers\TransactionsController;
 use App\Controllers\OpenShortController;
 use App\Controllers\CloseShortController;
 use App\ViewVariables\ErrorViewVariables;
@@ -70,6 +71,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $route->addRoute('POST', '/coin/{coinId}/sell', [SellController::class, 'sell']);
     $route->addRoute('POST', '/coin/{symbol}/openShort', [OpenShortController::class, 'openShort']);
     $route->addRoute('POST', '/coin/{shortId}/closeShort', [CloseShortController::class, 'closeShort']);
+    $route->addRoute('GET', '/transactions', [TransactionsController::class, 'showForm']);
 });
 // Fetch method and URI from somewhere
 $httpMethod = $_SERVER['REQUEST_METHOD'];

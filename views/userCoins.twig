@@ -1,7 +1,7 @@
 {% extends "profile.twig" %}
 {% block userCoins %}
+    <div class="item2-2">
     {% if userCoins.0 %}
-        <div class="item2-2">
             <p class="h2">Your cryptocurrency:</p>
             <table class="fl-table">
                 <thead>
@@ -62,8 +62,9 @@
                 {% endfor %}
                 </tbody>
             </table>
-        </div>
+
     {% else %}
         <p class="h2">You do not have opened shorts!</p>
     {% endif %}
+    </div>
 {% endblock %}

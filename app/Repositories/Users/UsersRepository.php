@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Users;
 
+use App\Models\Collections\TransactionsCollection;
 use App\Models\Collections\UserCoinCollection;
 use App\Models\Collections\UserShortCollection;
 use App\Models\Cryptocurrency;
 use App\Models\NewUser;
+use App\Models\Transaction;
 use App\Models\User;
 
 interface UsersRepository
@@ -29,4 +31,6 @@ interface UsersRepository
     public function getUserShortsBySymbol(int $userId, string $symbol): UserShortCollection;
     public function getShortSymbol(int $shortId):string;
     public function updateUserShort(int $shortId, int $amount): void;
+    public function getTransactionHistory(int $userId): TransactionsCollection;
+    public function addTransaction(Transaction $transaction): void;
 }

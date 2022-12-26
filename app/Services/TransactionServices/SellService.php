@@ -2,6 +2,8 @@
 
 namespace App\Services\TransactionServices;
 
+use App\Models\Transaction;
+
 class SellService extends TransactionService
 {
     public function execute(int $coinId, int $amount): string
@@ -11,6 +13,8 @@ class SellService extends TransactionService
         $price*=$amount;
         $this->usersRepository->addMoney($price);
         $this->usersRepository->updateUserCoin($coinId,$amount);
+        $transaction=new Transaction($_SESSION['userId'],'sell',$price,$coinSymbol,$amount);
+        $this->usersRepository->addTransaction($transaction);
         return $coinSymbol;
     }
 }
