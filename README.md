@@ -28,5 +28,7 @@
 * You need to run the website from <code>crypto/public</code> folder by typing in terminal:<br>
   <code>cd public/</code><br><code>php -S localhost:8000</code>
 
-## Home page:
-![homepage](https://user-images.githubusercontent.com/112757458/209699494-5dd3f3aa-1aa5-4e5c-9d7d-085359c5baa5.png)
+### Home page, login, register::
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/112757458/209704052-ed69c5b0-c33b-4d94-a051-ac53d3fd35e8.gif)
+### Sell, buy:
+
