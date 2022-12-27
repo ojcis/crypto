@@ -29,4 +29,4 @@
   <code>cd public/</code><br><code>php -S localhost:8000</code>
 
 ## Home page:
-![homepage](https://github.com/ojcis/crypto.wiki.git)
+![homepage](https://user-images.githubusercontent.com/112757458/209699494-5dd3f3aa-1aa5-4e5c-9d7d-085359c5baa5.png)
