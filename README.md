@@ -29,4 +29,3 @@
   <code>cd public/</code><br><code>php -S localhost:8000</code>
 
 ## Home page:
-![Home page](https://drive.google.com/file/d/1cHiG_hJb23iRfediyK-6WoNs7Vk7D1lx/view?usp=share_link)
