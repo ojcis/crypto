@@ -29,6 +29,14 @@
   <code>cd public/</code><br><code>php -S localhost:8000</code>
 
 ### Home page, login, register::
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/112757458/209704052-ed69c5b0-c33b-4d94-a051-ac53d3fd35e8.gif)
-### Sell, buy:
+![home-login-register](https://user-images.githubusercontent.com/112757458/209707392-eea49db1-fd8a-41e3-b2db-9226b314e991.gif)
+### Select, Search:
+![select-search](https://user-images.githubusercontent.com/112757458/209707445-9b16cae5-4796-4e48-b268-a8e3e2eccfca.gif)
+### Buy, sell:
+![buy-sell](https://user-images.githubusercontent.com/112757458/209707583-f4a3e67c-49c8-45ea-bb4f-06e2a53557c5.gif)
+### Open, close short position:
+![open-close-short](https://user-images.githubusercontent.com/112757458/209707794-22027e39-7ddf-4565-8755-f750997555a2.gif)
+### profile:
+![profile](https://user-images.githubusercontent.com/112757458/209707845-31f0a2a8-7512-49b4-bcc7-51405e077a50.gif)
+
 
